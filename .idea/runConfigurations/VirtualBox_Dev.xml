@@ -1,0 +1,70 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="VirtualBox Dev" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 8.5.29" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="PORT" value="8000" />
+    <option name="LOCAL" value="false" />
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8888/" />
+    <option name="UPDATING_POLICY" value="redeploy-artifacts" />
+    <deployment>
+      <artifact name="SintRest">
+        <settings>
+          <option name="CONTEXT_PATH" value="/" />
+        </settings>
+      </artifact>
+    </deployment>
+    <server-settings>
+      <data>
+        <option name="targets">
+          <list>
+            <WatchedTargetModelImpl>
+              <option name="name" value="CONTEXT_XML" />
+              <option name="transportStagingTarget">
+                <TransportTarget>
+                  <option name="id" value="2746eced-6778-4472-9c0f-89c0a84cc7a5" />
+                  <id>2746eced-6778-4472-9c0f-89c0a84cc7a5</id>
+                </TransportTarget>
+              </option>
+              <option name="watchedLocalPath" value="" />
+              <watched-path />
+              <name>CONTEXT_XML</name>
+              <transport-target>
+                <TransportTarget>
+                  <option name="id" value="2746eced-6778-4472-9c0f-89c0a84cc7a5" />
+                  <id>2746eced-6778-4472-9c0f-89c0a84cc7a5</id>
+                </TransportTarget>
+              </transport-target>
+            </WatchedTargetModelImpl>
+            <StagingTargetModelImpl>
+              <option name="name" value="STAGING" />
+              <option name="stagingRemotePath" value="/opt/tomcat/webapps" />
+              <option name="transportStagingTarget">
+                <TransportTarget>
+                  <option name="id" value="b415ba04-1acc-4385-8e73-aa377085d0eb" />
+                  <id>b415ba04-1acc-4385-8e73-aa377085d0eb</id>
+                </TransportTarget>
+              </option>
+              <staging-path>/opt/tomcat/webapps</staging-path>
+              <name>STAGING</name>
+              <transport-target>
+                <TransportTarget>
+                  <option name="id" value="b415ba04-1acc-4385-8e73-aa377085d0eb" />
+                  <id>b415ba04-1acc-4385-8e73-aa377085d0eb</id>
+                </TransportTarget>
+              </transport-target>
+            </StagingTargetModelImpl>
+          </list>
+        </option>
+      </data>
+    </server-settings>
+    <predefined_log_file id="Tomcat" enabled="true" />
+    <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="46507" />
+      <option name="LOCAL" value="false" />
+    </RunnerSettings>
+    <method>
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="SintRest" />
+      </option>
+    </method>
+  </configuration>
+</component>
