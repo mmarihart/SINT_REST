@@ -19,16 +19,42 @@ public class Basket {
         this.items = new ArrayList<Item>();
     }
 
-    public void addItem(Item x) {
-        this.items.add(x);
+    public void addItem(Item x, int amount) {
+        for(int i = 0; i < amount; i++) {
+            this.items.add(x);
+        }
     }
 
     public Item getItem(int index) {
         return items.get(index);
     }
 
-    public List<Item> getItems() {
-        return items;
+    public void deleteItem(int itemId) {
+        List<Item> itemsToDelete = new ArrayList<Item>();
+        for(Item x : items) {
+            if(x.getId() == itemId) {
+                itemsToDelete.add(x);
+            }
+        }
+        for(Item x : itemsToDelete) {
+            items.remove(x);
+        }
     }
 
+    public String getItems() {
+        String result = "[";
+        for(Item x: items) {
+            result += x.toString();
+        }
+        return result + "]";
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"name\":\"" + name + '\"' +
+                ", \"id\":" + id +
+                ", \"itemcount\":" + items.size() +
+                '}';
+    }
 }

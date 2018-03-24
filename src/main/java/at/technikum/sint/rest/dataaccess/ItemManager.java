@@ -2,37 +2,46 @@ package at.technikum.sint.rest.dataaccess;
 
 import at.technikum.sint.rest.base.Item;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by @author
  */
 public class ItemManager {
 
-    public static List<Item> items;
+    private static Map<Integer, Item> items;
+    private static int lastId;
+    private static ItemManager itemsManager;
 
-    public ItemManager() {
+    public static ItemManager getItemManager() {
+        if(itemsManager == null) {
+            itemsManager = new ItemManager();
+        }
+        return itemsManager;
+    }
+
+    private ItemManager() {
         if(items == null) {
-            items = new ArrayList<Item>();
+            items = new HashMap<Integer, Item>();
         }
     }
 
-    public List getItems() {
-        return items;
+    public Collection<Item> getItems() {
+        return items.values();
     }
 
     public Item getItem(int id) {
-        return items.get(id-1);
+        return items.get(id);
     }
 
     public int addItem(Item item) {
-        items.add(item);
-        return items.size();
+        item.setId(lastId);
+        items.put(lastId, item);
+        return lastId++;
     }
 
     public boolean deleteItem(int id) {
-        items.remove(id-1);
+        items.remove(id);
         return true;
     }
 

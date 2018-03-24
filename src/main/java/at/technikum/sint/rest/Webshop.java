@@ -7,16 +7,19 @@ package at.technikum.sint.rest;
 import at.technikum.sint.rest.base.Basket;
 import at.technikum.sint.rest.base.Item;
 import at.technikum.sint.rest.dataaccess.BasketManager;
+import at.technikum.sint.rest.dataaccess.ItemManager;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
 //TODO: change everything from List based solution to database solution (SQLite)
 
 // The Java class will be hosted at the URI path "/<artifactname>/apiv1/"
 @Path("/webshop/api")
 public class Webshop {
-    BasketManager bManager = new BasketManager();
+    private BasketManager bManager = BasketManager.getBasketManager();
+    private ItemManager iManager = ItemManager.getItemManager();
 
     // The Java method will process HTTP GET requests
     @GET
@@ -35,15 +38,8 @@ public class Webshop {
 
     @POST
     @Path("/basket")
-    public int createBasket() {
-
-        return bManager.createBasket();
-    }
-
-    @PUT
-    @Path("/basket")
-    public String addItem() {
-        return "BasketAddItem";
+    public String createBasket() {
+        return "{\"status\":\"success\",\"id\":" + bManager.createBasket() + "}";
     }
 
     @DELETE
@@ -57,12 +53,58 @@ public class Webshop {
     @Path("/basket/{basketid}")
     public String getBasketItems(@PathParam("basketid") int basketid) {
         Basket b = bManager.getBasket(basketid);
-        return b.getItems().toString();
+        return b.getItems();
+    }
+
+    @PUT
+    @Path("/basket/{basketid}")
+    public String addBasketItem(@PathParam("basketid") int basketid, String postData) {
+        try {
+            JSONObject jsonObject = new JSONObject(postData);
+            bManager.getBasket(basketid).addItem(iManager.getItem(jsonObject.getInt("id")), jsonObject.getInt("amount"));
+            return "{\"status\":\"success\"}";
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{\"status\":\"error\"}";
+        }
+    }
+
+    @DELETE
+    @Path("/basket/{basketid}/{itemid}")
+    public boolean deleteBasketItem(@PathParam("basketid") int basketid, @PathParam("itemid") int itemid) {
+        bManager.getBasket(basketid).deleteItem(itemid);
+        return true;
     }
 
     @GET
     @Path("/item")
-    public Item getItems() {
-        return null;
+    public String getItems() {
+        return iManager.getItems().toString();
+    }
+
+    @POST
+    @Path("/item")
+    public String createItem(String postData) {
+        try {
+            JSONObject jsonObject = new JSONObject(postData);
+            Item x = new Item(jsonObject.getString("name"), jsonObject.getDouble("price"), jsonObject.getString("desc"), jsonObject.getString("vendor"));
+            return "{\"status\":\"success\",\"id\":" + iManager.addItem(x) + "}";
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{\"status\":\"error\"}";
+        }
+    }
+
+    @GET
+    @Path("/item/{itemid}")
+    public String getItem(@PathParam("itemid") int itemId) {
+        return iManager.getItem(itemId).toString();
+    }
+
+    @DELETE
+    @Path("/item/{itemid}")
+    public boolean deleteItem(@PathParam("itemid") int itemId) {
+        return iManager.deleteItem(itemId);
     }
 }
