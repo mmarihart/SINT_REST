@@ -27,6 +27,7 @@ Endpoint to retrieve a complete list of all cars registered.
 Endpoint used to create a new car.
 Parameters are mandatory.
 The URL parameter 'currency' can be used to supply the price in a different currency. The price will be converted to the base currency USD with the exchange rate at the time of registering the car.
+The car is available instantly.
 
 #### POST Body
 ```javascript
@@ -49,6 +50,7 @@ The URL parameter 'currency' can be used to supply the price in a different curr
 }
 ```
 
+
 ### GET /api/car/{ID}
 
 Endpoint used to query a specific car.
@@ -61,6 +63,16 @@ Endpoint used to query a specific car.
 }
 ```
 
+### DELETE /api/car/car{ID}
+Endpoint used to delete a specific car.
+#### Return Value
+```javascript
+{
+    "success": true|false
+}
+```
+
+
 ### PUT /api/car/{ID}
 ???
 
@@ -68,14 +80,12 @@ Endpoint used to query a specific car.
 
 Endpoint to rent a given car.
 Parameter 'date' is mandatory.
-Location is optional.
+Format for parameter 'date': dd-MM-yyyy
 
 #### POST Body
 ```javascript
 { 
-    "return": date,
-    "returnLon": String,
-    "returnLat": String
+    "return": date
 }
 ```
 
@@ -94,9 +104,8 @@ Return location is necessary.
 #### POST Body
 ```javascript
 {
-    "id": int,
-    "returnLon": String,
-    "returnLat": String
+    "lon": String,
+    "lat": String
 }
 ```
 
@@ -124,8 +133,6 @@ The respective null values will be used when the parameter is not included.
     "kw": double,
     "name": String,
     "manufacturer": String
-    "count": int,
-    "offset": int
 }
 ```
 
@@ -152,6 +159,7 @@ The respective null values will be used when the parameter is not included.
    "available": boolean,
    "lat": String,
    "lon": String,
-   "price": double
+   "price": double,
+   "availableOn": date
 }
 ```
