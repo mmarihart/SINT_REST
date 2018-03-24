@@ -1,6 +1,7 @@
 # SINT_REST
 
 ## REST Endpoints
+Every endpoint accepts the URL parameter 'currency' with values like 'GBP', 'EUR', 'USD', etc. The parameter is used to calculate the prices.
 
 ### GET /api
 ???
@@ -25,6 +26,7 @@ Endpoint to retrieve a complete list of all cars registered.
 
 Endpoint used to create a new car.
 Parameters are mandatory.
+The URL parameter 'currency' can be used to supply the price in a different currency. The price will be converted to the base currency USD with the exchange rate at the time of registering the car.
 
 #### POST Body
 ```javascript
