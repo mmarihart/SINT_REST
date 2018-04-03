@@ -13,8 +13,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.*;
 
-//TODO: change everything from List based solution to database solution (SQLite)
-
 // The Java class will be hosted at the URI path "/<artifactname>/apiv1/"
 @Path("/webshop/api")
 public class Webshop {
