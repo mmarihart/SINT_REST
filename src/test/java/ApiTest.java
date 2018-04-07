@@ -14,6 +14,14 @@ public class ApiTest {
 
     private static String urlBase = "http://127.0.0.1:8888/SintRest/cardealer/api/";
 
+    private static String login(String user, String password) throws IOException {
+        String body = "{" +
+                "\"user\":\"" + user + "\"," +
+                "\"password\":\"" + password + "\"" +
+                "}";
+        return sendRequest("POST", "login", body);
+    }
+
     private static String createCar(String name, String manufacturer, String type, int seats, double kw, String lat, String lon, double price) throws IOException {
         String body = "{" +
                 "\"name\":\"" + name + "\"," +
@@ -93,6 +101,8 @@ public class ApiTest {
         HttpURLConnection connection = null;
 
         try {
+            System.out.println(login("jackie", "superSecretPassword"));
+
             // Create a test basket
             System.out.println("Testing endpoint POST /car");
             int carId = new JSONObject(createCar("Prius", "Toyota", "Family", 6, 10.3, "0.00000", "0.00000", 123.4)).getInt("id");

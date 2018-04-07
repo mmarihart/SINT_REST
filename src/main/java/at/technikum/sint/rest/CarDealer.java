@@ -4,31 +4,59 @@ package at.technikum.sint.rest;
  * Created by @author
  */
 
+import at.technikum.sint.rest.auth.JWTTokenNeeded;
 import at.technikum.sint.rest.base.Car;
 import at.technikum.sint.rest.dataaccess.CarManager;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.security.Key;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
-//TODO: change everything from List based solution to database solution (SQLite)
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
 // The Java class will be hosted at the URI path "/<artifactname>/apiv1/"
 @Path("/cardealer/api")
 public class CarDealer {
     private CarManager cManager = CarManager.getItemManager();
 
-    // The Java method will process HTTP GET requests
-    @GET
-    // The Java method will produce content identified by the MIME Media type "text/plain"
-    @Produces("text/plain")
-    public String getClichedMessage() {
-        // Return some cliched textual content
-        return "Hello TE123ST123";
+    @POST
+    @Path("/login")
+    public Response login(String postData) {
+        try {
+            JSONObject jsonObject = new JSONObject(postData);
+            String user = jsonObject.getString("user");
+            String password = jsonObject.getString("password");
+            if(user.equals("jackie") && password.equals("superSecretPassword")){
+                String token = issueToken(user);
+                String responseBody = "{" +
+                        "\"success\":" + true + "," +
+                        "\"token\":\"" + token + "\"" +
+                        "}";
+                return Response.ok().header(AUTHORIZATION, "Bearer " + token).entity(responseBody).build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    private String issueToken(String login) {
+        String keyString = "staticSecretKeyString";
+        Key key = new SecretKeySpec(keyString.getBytes(), 0, keyString.getBytes().length, "DES");
+        String jwtToken = Jwts.builder().setSubject(login).setIssuer("cardealer.sint.com").setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS512, key).compact();
+        return jwtToken;
     }
 
     @GET
@@ -36,7 +64,7 @@ public class CarDealer {
     public String getCars(@DefaultValue("USD") @QueryParam("currency") String currency) {
         String resultString = "[";
         for (Car c : cManager.getCars()) {
-            resultString += c.toString() + ",";
+            resultString += c.toString(currency) + ",";
         }
         resultString = resultString.substring(0, resultString.length() - 1) + "]";
         return "{\"success\":" + true + ",\"result\":" + resultString + "}";
@@ -44,6 +72,7 @@ public class CarDealer {
 
     @POST
     @Path("/car")
+    @JWTTokenNeeded
     public String createCar(String postData, @DefaultValue("USD") @QueryParam("currency") String currency) {
         try {
             JSONObject jsonObject = new JSONObject(postData);
@@ -72,6 +101,7 @@ public class CarDealer {
 
     @DELETE
     @Path("/car/{carid}")
+    @JWTTokenNeeded
     public String deleteCar(@PathParam("carid") int carid) {
         cManager.deleteCar(carid);
         return "{\"success\":" + true + "}";
@@ -79,6 +109,7 @@ public class CarDealer {
 
     @POST
     @Path("/car/{carid}/rent")
+    @JWTTokenNeeded
     public String rentCar(@PathParam("carid") int carid, String postData) {
         try {
             JSONObject jsonObject = new JSONObject(postData);
@@ -98,6 +129,7 @@ public class CarDealer {
 
     @POST
     @Path("/car/{carid}/return")
+    @JWTTokenNeeded
     public String returnCar(@PathParam("carid") int carid, String postData) {
         try {
             JSONObject jsonObject = new JSONObject(postData);
