@@ -63,10 +63,14 @@ public class CarDealer {
     @Path("/car")
     public String getCars(@DefaultValue("USD") @QueryParam("currency") String currency) {
         String resultString = "[";
-        for (Car c : cManager.getCars()) {
-            resultString += c.toString(currency) + ",";
+        if(cManager.getCars().size() == 0) {
+            resultString += "]";
+        } else {
+            for (Car c : cManager.getCars()) {
+                resultString += c.toString(currency) + ",";
+            }
+            resultString = resultString.substring(0, resultString.length() - 1) + "]";
         }
-        resultString = resultString.substring(0, resultString.length() - 1) + "]";
         return "{\"success\":" + true + ",\"result\":" + resultString + "}";
     }
 
