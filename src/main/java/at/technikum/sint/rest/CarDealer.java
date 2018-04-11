@@ -121,14 +121,14 @@ public class CarDealer {
             cManager.rentCar(carid, returnDate);
         } catch (JSONException e) {
             e.printStackTrace();
-            return "\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
+            return "{\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
         } catch (ParseException e) {
             e.printStackTrace();
-            return "\"success\":" + false + ",\"error\":\"dd-MM-yyyy format expected for date\"}";
+            return "{\"success\":" + false + ",\"error\":\"dd-MM-yyyy format expected for date\"}";
         } catch (Exception e) {
-            return "\"success\":" + false + ",\"error\":\"" + e.getMessage() + "\"}";
+            return "{\"success\":" + false + ",\"error\":\"" + e.getMessage() + "\"}";
         }
-        return "\"success\":" + true + "}";
+        return "{\"success\":" + true + "}";
     }
 
     @POST

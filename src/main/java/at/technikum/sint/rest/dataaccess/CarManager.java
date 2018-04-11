@@ -48,7 +48,10 @@ public class CarManager {
 
     public void rentCar(int id, Date returnDate) throws Exception {
         Car x = (Car) cars.get(id);
-        if (x.isAvailable()) {
+        if(x == null) {
+            throw new Exception("Car with ID " + id + " does not exist.");
+        }
+;        if (x.isAvailable()) {
             x.setAvailable(false);
             x.setAvailableOn(returnDate);
         } else {
