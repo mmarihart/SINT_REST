@@ -142,11 +142,11 @@ public class CarDealer {
             cManager.returnCar(carid, returnLon, returnLat);
         } catch (JSONException e) {
             e.printStackTrace();
-            return "\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
+            return "{\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
         } catch (Exception e) {
-            return "\"success\":" + false + ",\"error\":\"" + e.getMessage() + "\"}";
+            return "{\"success\":" + false + ",\"error\":\"" + e.getMessage() + "\"}";
         }
-        return "\"success\":" + true + "}";
+        return "{\"success\":" + true + "}";
     }
 
     @POST
@@ -165,7 +165,7 @@ public class CarDealer {
             jsonObject = new JSONObject(postData);
         } catch (JSONException e) {
             e.printStackTrace();
-            return "\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
+            return "{\"success\":" + false + ",\"error\":\"error parsing JSON\"}";
         }
 
         try {
@@ -188,7 +188,7 @@ public class CarDealer {
             date = new SimpleDateFormat("dd-MM-yyyy").parse(jsonObject.getString("date"));
         } catch (JSONException e) {
         } catch (ParseException e) {
-            return "\"success\":" + false + ",\"error\":\"dd-MM-yyyy format expected for date\"}";
+            return "{\"success\":" + false + ",\"error\":\"dd-MM-yyyy format expected for date\"}";
         }
         try {
             kw = jsonObject.getDouble("kw");
@@ -208,7 +208,7 @@ public class CarDealer {
             resultString += x.toString(currency) + ",";
         }
         resultString = resultString.substring(0, resultString.length() - 1) + "]";
-        return "\"success\":" + true + ",\"result\":" + resultString + "}";
+        return "{\"success\":" + true + ",\"result\":" + resultString + "}";
 
     }
 
