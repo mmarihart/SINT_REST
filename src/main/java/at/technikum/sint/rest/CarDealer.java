@@ -100,7 +100,7 @@ public class CarDealer {
     @Path("/car/{carid}")
     public String getCar(@PathParam("carid") int carid, @DefaultValue("USD") @QueryParam("currency") String currency) {
         Car c = cManager.getCar(carid);
-        return "{\"success\":" + true + ", \"result\":" + c.toString(currency);
+        return "{\"success\":" + true + ", \"result\":" + c.toString(currency) + "}";
     }
 
     @DELETE
