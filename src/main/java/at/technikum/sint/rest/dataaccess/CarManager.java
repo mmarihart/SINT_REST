@@ -36,7 +36,7 @@ public class CarManager {
 
     public int addCar(String name, String manufacturer, String type, int seats, double kw, String lat, String lon, double price, String currency) {
         //TODO: include Florie's currency translation
-        Car x = new Car(lastId, name, manufacturer, type, seats, kw, true, lat, lon, price, null);
+        Car x = new Car(lastId, name, manufacturer, type, seats, kw, true, lat, lon, price, Calendar.getInstance().getTime());
         cars.put(lastId, x);
         return lastId++;
     }
