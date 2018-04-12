@@ -1,5 +1,6 @@
 package at.technikum.sint.rest.base;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -99,6 +100,7 @@ public class Car {
 
     @Override
     public String toString() {
+        String availableOn = new SimpleDateFormat("dd-MM-yyyy").format(getAvailableOn());
         return "{" +
                 "\"id\":" + id +
                 ", \"name\":\"" + name + '\"' +
@@ -110,11 +112,12 @@ public class Car {
                 ", \"lat\":\"" + lat + '\"' +
                 ", \"lon\":\"" + lon + '\"' +
                 ", \"price\":" + price +
-                ", \"avaiableOn\":\"" + availableOn + '\"' +
+                ", \"availableOn\":\"" + availableOn + '\"' +
                 '}';
     }
 
     public String toString(String currency) {
+        String availableOn = new SimpleDateFormat("dd-MM-yyyy").format(getAvailableOn());
         return "{" +
                 "\"id\":" + id +
                 ", \"name\":\"" + name + '\"' +
@@ -126,7 +129,7 @@ public class Car {
                 ", \"lat\":\"" + lat + '\"' +
                 ", \"lon\":\"" + lon + '\"' +
                 ", \"price\":" + getTranslatedPrice(currency) +
-                ", \"avaiableOn\":\"" + availableOn + '\"' +
+                ", \"availableOn\":\"" + availableOn + '\"' +
                 '}';
     }
 
