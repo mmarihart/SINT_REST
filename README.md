@@ -63,7 +63,7 @@ Endpoint used to query a specific car.
 }
 ```
 
-### DELETE /api/car/car{ID}
+### DELETE /api/car/{ID}
 Endpoint used to delete a specific car.
 #### Return Value
 ```javascript
@@ -104,8 +104,8 @@ Return location is necessary.
 #### POST Body
 ```javascript
 {
-    "lon": String,
-    "lat": String
+    "returnLon": String,
+    "returnLat": String
 }
 ```
 

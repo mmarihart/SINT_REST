@@ -137,8 +137,8 @@ public class CarDealer {
     public String returnCar(@PathParam("carid") int carid, String postData) {
         try {
             JSONObject jsonObject = new JSONObject(postData);
-            String returnLon = jsonObject.getString("lon");
-            String returnLat = jsonObject.getString("lat");
+            String returnLon = jsonObject.getString("returnLon");
+            String returnLat = jsonObject.getString("returnLat");
             cManager.returnCar(carid, returnLon, returnLat);
         } catch (JSONException e) {
             e.printStackTrace();
