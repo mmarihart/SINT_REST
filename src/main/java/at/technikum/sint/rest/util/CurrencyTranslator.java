@@ -1,4 +1,6 @@
 package at.technikum.sint.rest.util;
+import org.tempuri.IService1;
+import org.tempuri.Service1Locator;
 
 /**
  * Created by @author
@@ -6,10 +8,26 @@ package at.technikum.sint.rest.util;
 public class CurrencyTranslator {
 
     public static double convertValue(double value, String sourceCurrency, String destinationCurrency) {
-        // TODO: implement magic currency translation stuff = SOAP call to Mario's service
-        // sourceCurrency for example: USD
-        // destinationCurrency for example: GBP
-        // multiple conversions might be necessary: for example USD => EUR => GBP if no USD/GBP mapping is available
-        return 0.0;
+
+        Service1Locator locator = new Service1Locator();
+        try {
+            IService1 iservice1 = locator.getBasicHttpBinding_IService1();
+            // convert(price, act_curr, des_curr) method from Mario 's service
+            double translatedvalue = iservice1.convert(value, sourceCurrency, destinationCurrency);
+            System.out.println("Translated value: " + translatedvalue);
+            //JOptionPane.showMessageDialog(null, "The translated value is: " + translatedvalue);
+
+            return translatedvalue;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //show message if unreachable
+            //JOptionPane.showMessageDialog(null, "Unable to reach the service Waehrungsumrechner..." + e.getMessage());
+
+            return 0.0;
+        }
+
+
+
     }
 }

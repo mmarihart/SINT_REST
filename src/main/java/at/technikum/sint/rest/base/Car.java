@@ -1,5 +1,7 @@
 package at.technikum.sint.rest.base;
 
+import at.technikum.sint.rest.util.CurrencyTranslator;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -134,7 +136,6 @@ public class Car {
     }
 
     private double getTranslatedPrice(String currency) {
-        //todo: call Florie's functionality
-        return price;
+        return CurrencyTranslator.convertValue(price, "USD", currency);
     }
 }

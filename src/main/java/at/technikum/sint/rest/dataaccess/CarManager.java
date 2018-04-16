@@ -1,6 +1,7 @@
 package at.technikum.sint.rest.dataaccess;
 
 import at.technikum.sint.rest.base.Car;
+import at.technikum.sint.rest.util.CurrencyTranslator;
 
 import java.util.*;
 
@@ -35,8 +36,8 @@ public class CarManager {
     }
 
     public int addCar(String name, String manufacturer, String type, int seats, double kw, String lat, String lon, double price, String currency) {
-        //TODO: include Florie's currency translation
-        Car x = new Car(lastId, name, manufacturer, type, seats, kw, true, lat, lon, price, Calendar.getInstance().getTime());
+        double translated = CurrencyTranslator.convertValue(price, currency, "USD");
+        Car x = new Car(lastId, name, manufacturer, type, seats, kw, true, lat, lon, translated, Calendar.getInstance().getTime());
         cars.put(lastId, x);
         return lastId++;
     }
