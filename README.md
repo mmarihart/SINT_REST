@@ -3,8 +3,23 @@
 ## REST Endpoints
 Every endpoint accepts the URL parameter 'currency' with values like 'GBP', 'EUR', 'USD', etc. The parameter is used to calculate the prices.
 
-### GET /api
-???
+### POST /api/login
+
+#### POST Body
+```javascript
+{
+    "user": String,
+    "password": String
+}
+```
+
+#### Return Value
+```javascript
+{
+    "success": true|false,
+    "token": String
+}
+```
 
 ### GET /api/car
 
